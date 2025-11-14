@@ -23,8 +23,8 @@ function PowerUnitList({ onEdit }) {
     
 
     return (
-    <div>
-      <h2>Power Units</h2>
+    <div className="PowerUnitList">
+      
       <table border="1">
         <thead>
           <tr>
@@ -40,8 +40,10 @@ function PowerUnitList({ onEdit }) {
               <td>{pu.year}</td>
               <td>{pu.status}</td>
               <td>
+                <div className="table-buttons">
                 <button onClick={() => onEdit(pu)}>Edit</button>
                 <button onClick={() => deleteUnit(pu.id)}>Delete</button>
+                </div>
               </td>
             </tr>
           ))}

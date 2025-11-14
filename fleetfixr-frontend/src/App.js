@@ -1,11 +1,14 @@
 import './App.css';
+import logo from './fleetfixr_logo.png';
 import React, { useState } from "react";
 import PowerUnitList from "./components/PowerUnitList";
 import PowerUnitForm from "./components/PowerUnitForm";
+import CvipForm from './components/cvipForm';
 import axios from "axios";
 
 
 function App() {
+
   const [editUnit, setEditUnit] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
@@ -32,14 +35,24 @@ function App() {
       });
   };
   return (
-    <div>
-      <h1>FleetFixr Power Units</h1>
-      <PowerUnitForm 
-      selectedUnit={editUnit} 
-      onSaved={handleSaved} 
-      onCancel={() => setEditUnit(null)}
-      onUpdate={handleUpdate} />
-      <PowerUnitList key={refresh} onEdit={handleEdit} />
+    
+    <div className="App">
+      <div className="App-header">
+        <img src={logo} alt="FleetFixr Logo" className="App-logo" />
+        <h1 className="app-title">
+        <span className="highlight">FleetFixr</span>
+        Dashboard
+      </h1>
+      </div>
+      <div className="dashboard">
+        <PowerUnitForm 
+        selectedUnit={editUnit} 
+        onSaved={handleSaved} 
+        onCancel={() => setEditUnit(null)}
+        onUpdate={handleUpdate} />
+        <PowerUnitList key={refresh} onEdit={handleEdit} />
+        <CvipForm />
+      </div>
       
     </div>
   );

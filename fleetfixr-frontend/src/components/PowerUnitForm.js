@@ -35,13 +35,20 @@ function PowerUnitForm({ selectedUnit, onSaved, onCancel }) {
 
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="truck-form" onSubmit={handleSubmit}>
+      <h2>{selectedUnit ? "Edit Power Unit" : "+ Add Power Unit"}</h2>
+      
       <input name="vin" placeholder="VIN" value={unit.vin} onChange={handleChange} />
+      
       <input name="make" placeholder="Make" value={unit.make} onChange={handleChange} />
+      
       <input name="year" placeholder="Year" value={unit.year} onChange={handleChange} />
+      
       <input name="status" placeholder="Status" value={unit.status} onChange={handleChange} />
-      <button type="submit">{unit.id ? "Update" : "Create"}</button>
-      {unit.id && <button type="button" onClick={onCancel}>Cancel</button>}
+      <div className="form-buttons">
+        <button type="submit">{unit.id ? "Update" : "Create"}</button>
+        {unit.id && <button type="button" onClick={onCancel}>Cancel</button>}
+      </div>
     </form>
   );
 }
