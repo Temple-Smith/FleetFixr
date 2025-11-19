@@ -1,6 +1,6 @@
 import './App.css';
 import logo from './fleetfixr_logo.png';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PowerUnitList from "./components/PowerUnitList";
 import PowerUnitForm from "./components/PowerUnitForm";
 import CvipForm from './components/cvipForm';
@@ -11,6 +11,18 @@ function App() {
 
   const [editUnit, setEditUnit] = useState(null);
   const [refresh, setRefresh] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState(false);
+  const [showCvipForm, setShowCvipForm] = useState(false);
+
+useEffect(() => {
+  console.log("showCvipForm changed:", showCvipForm);
+  }, [showCvipForm]);
+
+
+  const handleCloseCvip = () => {
+    setShowCvipForm(false);
+    setRefresh(!refresh);
+  }
 
   const handleSaved = () => {
     setEditUnit(null);
@@ -20,6 +32,14 @@ function App() {
   const handleEdit = (unit) => {
     setEditUnit(unit);
   };
+
+  const handleViewCvip = (unit) => {
+    setSelectedUnit(unit);
+    setShowCvipForm(true);
+    console.log(setShowCvipForm);
+    console.log(unit);
+  }
+
 
   const handleUpdate = () => {
     if (!editUnit) return;
@@ -45,14 +65,24 @@ function App() {
       </h1>
       </div>
       <div className="dashboard">
+        <div className="left-col">
         <PowerUnitForm 
         selectedUnit={editUnit} 
         onSaved={handleSaved} 
         onCancel={() => setEditUnit(null)}
         onUpdate={handleUpdate} />
-        <PowerUnitList key={refresh} onEdit={handleEdit} />
-        <CvipForm />
-      </div>
+        
+          <CvipForm
+          selectedUnit={selectedUnit}
+          onClose={handleCloseCvip} />
+        
+        </div>
+       
+        <PowerUnitList key={refresh} 
+        onEdit={handleEdit}
+        onViewCvip={handleViewCvip} />
+         
+        </div>
       
     </div>
   );

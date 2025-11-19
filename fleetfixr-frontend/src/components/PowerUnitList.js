@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function PowerUnitList({ onEdit }) {
+
+function PowerUnitList({ onEdit, onViewCvip }) {
     const [powerUnits, setPowerUnits] = useState([]);
 
     const fetchPowerUnits = () => {
@@ -9,6 +10,8 @@ function PowerUnitList({ onEdit }) {
             .then(res => setPowerUnits(res.data))
             .catch(err => console.error("Error fetching power units:", err));
     };
+
+    
 
     useEffect(() => {
         fetchPowerUnits();
@@ -19,9 +22,6 @@ function PowerUnitList({ onEdit }) {
             .then(() => fetchPowerUnits())
             .catch(err => console.error("Error deleting power unit:", err));
     };
-
-    
-
     return (
     <div className="PowerUnitList">
       
@@ -43,8 +43,10 @@ function PowerUnitList({ onEdit }) {
                 <div className="table-buttons">
                 <button onClick={() => onEdit(pu)}>Edit</button>
                 <button onClick={() => deleteUnit(pu.id)}>Delete</button>
+                {pu.cvipPath ? <span style={{ color: "green", fontWeight: "bold" }}>✔ CVIP</span> : (<span style={{ opacity: 0.3}}>No CVIP</span>)}
+
                 </div>
-              </td>
+              </td> 
             </tr>
           ))}
         </tbody>

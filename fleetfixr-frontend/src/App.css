@@ -1,8 +1,14 @@
 .App {
   text-align: center;
   min-height: 100vh; /* Ensure it takes full viewport height */
-  background: linear-gradient(to bottom, #000000, #ffffff); /* Black to white gradient */
+  background: linear-gradient(rgb(0, 0, 0), rgb(184, 162, 148));
   color: #fff; /* White text for contrast */
+  height: 100%;
+  
+}
+
+body {
+  background: linear-gradient(rgb(184, 162, 148), rgb(0, 0, 0));
 }
 
 .content { /*not used*/
@@ -22,6 +28,8 @@
   flex-wrap: wrap; /* allow wrapping on smaller screens */
 }
 
+
+
 .truck-form {
   background: rgba(32, 30, 29, 0.9); /* semi-transparent white */
   border-radius: 16px;
@@ -35,6 +43,17 @@
   text-align: left;
   color: #d37100; /* dark text on light background */
   backdrop-filter: blur(5px); /* optional: subtle frosted glass effect */
+}
+
+.cvip-container {
+  position: relative;       /* keeps the overlay positioned relative to this div */
+  width: 400px;
+  max-width: 1050px;
+  margin: 20px 0;
+  background: rgba(32,30,29,0.9);
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  
 }
 
 .truck-form h2 {
@@ -61,6 +80,47 @@
   box-shadow: 0 0 5px rgba(0,123,255,0.5);
   outline: none;
 }
+.cvip-title {
+  color:#cb4a00;
+}
+
+.cvip-overlay {
+  position: fixed;       /* float above everything */
+  top: 0px;
+  left: 500px;
+  transform: translate(-50%, -50%); /* center horizontally & vertically */
+  z-index: 9999;         /* ensure it’s on top */
+  background: rgba(32,30,29,0.95);
+  padding: 20px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  overflow: auto;
+}
+.cvip-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.cvip-buttons button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s, transform 0.1s;
+  padding: 8px 14px;
+}
+
+.cvip-buttons button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
 
 .form-buttons {
   display: flex;
@@ -101,10 +161,10 @@
   overflow-y: auto;
   box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   color: #d37100; /* match truck-form text color */
-  backdrop-filter: blur(5px);
   display: flex;
   flex-direction: column;
   gap: 10px;
+  
 }
 
 .PowerUnitList table {
@@ -147,7 +207,7 @@
   align-items: center;
   
   gap: 2px;
-  margin-bottom: 10px;
+  margin-bottom: -10px;
   justify-content: flex-start;
 }
 
