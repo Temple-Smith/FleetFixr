@@ -43,7 +43,7 @@ function PowerUnitList({ onEdit, onViewCvip }) {
                 <div className="table-buttons">
                 <button onClick={() => onEdit(pu)}>Edit</button>
                 <button onClick={() => deleteUnit(pu.id)}>Delete</button>
-                {pu.cvipPath ? <span style={{ color: "green", fontWeight: "bold" }}>✔ CVIP</span> : (<span style={{ opacity: 0.3}}>No CVIP</span>)}
+                {pu.cvipPdf ? <button onClick={() => onViewCvip(pu.vin)}>View CVIP</button> : (<span style={{ opacity: 0.3}}>No CVIP</span>)}
 
                 </div>
               </td> 

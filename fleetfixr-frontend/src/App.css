@@ -100,9 +100,12 @@ body {
   overflow: auto;
 }
 .cvip-buttons {
+  position: relative;
   display: flex;
-  gap: 20px;
+  top: -10px;
+  gap: 0px;
   justify-content: center;
+
 }
 
 .cvip-buttons button {
@@ -112,6 +115,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  
   transition: background-color 0.2s, transform 0.1s;
   padding: 8px 14px;
 }
@@ -125,7 +129,7 @@ body {
 .form-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 .form-buttons button {

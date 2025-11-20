@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import axios from "axios";
-
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
@@ -9,12 +8,10 @@ pdfjsLib.GlobalWorkerOptions.workerSrc =
 export default function CvipForm({ totalPages = 4, onClose, selectedUnit }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [showPdf, setShowPdf] = useState(false);
-
   const canvasRef = useRef(null);
   const pdfDocRef = useRef(null);
-    
-
   const [vinChars, setVinChars] = useState(Array(17).fill(""));
+  const [pdfUrl, setPdfUrl] = useState(null);
 
   // -----------------------------
   // Load template CVIP PDF
@@ -33,23 +30,26 @@ export default function CvipForm({ totalPages = 4, onClose, selectedUnit }) {
     await renderPage(0);
   };
 
-  // load pdf from powerUnitList
+useEffect(() => {
+  // load pdf from powerUnitList (This currently is non functional)
+  const fetchCvipPdf = async (vin) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:8080/api/powerunits/cvip/getPdf/${vin}`,
+            {responseType: "blob"} // key for binary data
+        );
 
+        const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
 
-const fetchCvipPdf = useCallback(async () => {
-  if (!selectedUnit?.cvipPath) return;
-  const res = await fetch(`http://localhost:8080/${selectedUnit.cvipPath}`);
-  const blob = await res.blob();
-  const url = URL.createObjectURL(blob);
-  const pdf = await pdfjsLib.getDocument({ url }).promise;
-  pdfDocRef.current = pdf;
-  setShowPdf(true);
-  renderPage(0);
-}, [selectedUnit]);
-
- useEffect(() => {
+        // Set state or directly assign to iframe src
+        setPdfUrl(pdfUrl);
+    } catch (err) {
+        console.error("Failed to fetch PDF nikkuh:", err);
+    }
+  }; 
   fetchCvipPdf();
-}, [fetchCvipPdf]);
+}, []);
 
 
 
@@ -79,17 +79,6 @@ const fetchCvipPdf = useCallback(async () => {
     }).promise;
   };
 
-  // Convert canvas to file
-  function dataURLtoFile(dataurl, filename) {
-    const arr = dataurl.split(",");
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) u8arr[n] = bstr.charCodeAt(n);
-    return new File([u8arr], filename, { type: mime });
-  }
-
   // -----------------------------
   // SAVE: upload PDF + VIN
   // -----------------------------
@@ -102,48 +91,36 @@ const fetchCvipPdf = useCallback(async () => {
       return;
     }
 
-    if (!canvasRef.current) {
-      alert("Load the PDF first.");
-      return;
-    }
-
-    // Convert canvas → file
-    const dataUrl = canvasRef.current.toDataURL("application/pdf");
-    const file = dataURLtoFile(dataUrl, `cvip-${vin}.pdf`);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("vin", vin);
-
+    const payload = {
+        vin: vinChars.join(""),
+        fields: [
+            {
+                key: "vin",
+                text: vinChars.join(""),
+                x: 92,
+                y: 308,
+                fontSize: 14
+            }
+        ]
+    };
     try {
-      await axios.post(
-        "http://localhost:8080/api/powerunits/cvip/upload",
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
-      );
-      
-
-      alert("CVIP saved and attached to correct Power Unit!");
-      
-      onClose?.();
-
+        await axios.post(
+            "http://localhost:8080/api/powerunits/cvip/saveFields", payload
+        );
+        alert("Yeah it actually worked, you're on the right track n-word, got something to prove?");
     } catch (err) {
-      console.error("Upload failed:", err);
-
-      if (err.response?.status === 404) {
-        alert("VIN not found in database.");
-      } else {
-        alert("Upload failed.");
-      }
+        console.error("PDF Payload failed: ", err);
+        alert("Upload failed, keep troubleshooting bitch.");
     }
+
   };
 
   return (
     <div className="cvip-container">
       <h2 className="cvip-title">CVIP Form</h2>
-
-      <button onClick={handleLoadPdf}>Load PDF</button>
-
+        <div className="cvip-buttons">
+      <button onClick={handleLoadPdf}>Load CVIP</button>
+        </div>
       {showPdf && (
         <div className="cvip-overlay">
           <button

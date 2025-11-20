@@ -5,6 +5,9 @@ import PowerUnitList from "./components/PowerUnitList";
 import PowerUnitForm from "./components/PowerUnitForm";
 import CvipForm from './components/cvipForm';
 import axios from "axios";
+import CvipViewer from "./components/cvipViewer";
+
+
 
 
 function App() {
@@ -13,6 +16,8 @@ function App() {
   const [refresh, setRefresh] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState(false);
   const [showCvipForm, setShowCvipForm] = useState(false);
+  const [viewVin, setViewVin] = useState(null);
+
 
 useEffect(() => {
   console.log("showCvipForm changed:", showCvipForm);
@@ -33,11 +38,8 @@ useEffect(() => {
     setEditUnit(unit);
   };
 
-  const handleViewCvip = (unit) => {
-    setSelectedUnit(unit);
-    setShowCvipForm(true);
-    console.log(setShowCvipForm);
-    console.log(unit);
+  const handleViewCvip = (vin) => {
+    setViewVin(vin);
   }
 
 
@@ -81,6 +83,9 @@ useEffect(() => {
         <PowerUnitList key={refresh} 
         onEdit={handleEdit}
         onViewCvip={handleViewCvip} />
+        {viewVin && (
+        <CvipViewer vin={viewVin} onClose={() => setViewVin(null)} />
+        )}
          
         </div>
       
