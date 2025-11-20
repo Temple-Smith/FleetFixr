@@ -1,38 +1,265 @@
 .App {
   text-align: center;
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  background: linear-gradient(rgb(0, 0, 0), rgb(184, 162, 148));
+  color: #fff; /* White text for contrast */
+  height: 100%;
+  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background: linear-gradient(rgb(184, 162, 148), rgb(0, 0, 0));
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.content { /*not used*/
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers horizontally */
+  justify-content: center;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* centers horizontally */
+  justify-content: center;
+  gap: 5px;
+  padding-bottom: 40px;
+  flex-wrap: wrap; /* allow wrapping on smaller screens */
+}
+
+
+
+.truck-form {
+  background: rgba(32, 30, 29, 0.9); /* semi-transparent white */
+  border-radius: 16px;
+  padding: 25px 30px;
+  /*margin: 20px auto;*/
+  width: 340px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  color: #d37100; /* dark text on light background */
+  backdrop-filter: blur(5px); /* optional: subtle frosted glass effect */
+}
+
+.cvip-container {
+  position: relative;       /* keeps the overlay positioned relative to this div */
+  width: 400px;
+  max-width: 1050px;
+  margin: 20px 0;
+  background: rgba(32,30,29,0.9);
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  
+}
+
+.truck-form h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #cb4a00;
+}
+
+.truck-form label {
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.truck-form input {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.truck-form input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.5);
+  outline: none;
+}
+.cvip-title {
+  color:#cb4a00;
+}
+
+.cvip-overlay {
+  position: fixed;       /* float above everything */
+  top: 0px;
+  left: 500px;
+  transform: translate(-50%, -50%); /* center horizontally & vertically */
+  z-index: 9999;         /* ensure it’s on top */
+  background: rgba(32,30,29,0.95);
+  padding: 20px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  overflow: auto;
+}
+.cvip-buttons {
+  position: relative;
+  display: flex;
+  top: -10px;
+  gap: 0px;
+  justify-content: center;
+
+}
+
+.cvip-buttons button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  
+  transition: background-color 0.2s, transform 0.1s;
+  padding: 8px 14px;
+}
+
+.cvip-buttons button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.form-buttons button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.form-buttons button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.form-buttons button[type="button"] {
+  background-color: #aaa;
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #888;
+}
+
+.PowerUnitList {
+  background: rgba(32, 30, 29, 0.9); /* match the truck-form background */
+  border-radius: 16px;
+  padding: 20px;
+  width: 600px;
+  max-height: 336px;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  color: #d37100; /* match truck-form text color */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+}
+
+.PowerUnitList table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.PowerUnitList tbody td {
+  padding: 0.5px 5px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  background-color: #ffffff;
+  color: black;
+}
+
+.PowerUnitList th {
+  font-weight: bold;
+  color: #cb4a00; /* match form header */
+}
+
+
+.PowerUnitList tbody tr:hover td {
+  background-color: #a4c8ef;
+  cursor: pointer;
+}
+
+
+/* Optional: scroll styling */
+.PowerUnitList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.PowerUnitList::-webkit-scrollbar-thumb {
+  background-color: rgba(200,200,200,0.6); /* light gray */
+  border-radius: 4px;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  
+  gap: 2px;
+  margin-bottom: -10px;
+  justify-content: flex-start;
+}
+
+.app-title {
+  font-size: 2.5rem;   /* Increase size */
+  font-weight: 700;    /* Optional bold */
+  display: flex;       /* Makes them appear on one line */
+  align-items: center;
+  gap: 8px;
+}
+
+.app-title .highlight {
+  color: #cb4a00;
+}
+
+
+.App-logo {
+  height: auto;
+  width:300px;
+  pointer-events: none;
+}
+
+.table-buttons {
+  display: flex;
+  gap: 4px; /* space between buttons */
+  margin: 0; /* remove top/bottom margin */
+}
+.table-buttons button {  
+  cursor: pointer;
   color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color 0.2s, transform 0.1s;
 }
 
-.App-link {
-  color: #61dafb;
+.table-buttons button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.table-buttons button[type="button"] {
+  background-color: #aaa;
 }
+
+.table-buttons button[type="button"]:hover {
+  background-color: #888;
+}
+
+
