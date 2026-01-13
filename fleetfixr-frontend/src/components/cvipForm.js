@@ -107,7 +107,7 @@ useEffect(() => {
         await axios.post(
             "http://localhost:8080/api/powerunits/cvip/saveFields", payload
         );
-        alert("Yeah it actually worked, you're on the right track n-word, got something to prove?");
+        alert("Yeah it actually worked. I can't believe I was so stupid earlier with that message. I... apologize for my language.");
     } catch (err) {
         console.error("PDF Payload failed: ", err);
         alert("Upload failed, keep troubleshooting bitch.");

@@ -7,9 +7,6 @@ import CvipForm from './components/cvipForm';
 import axios from "axios";
 import CvipViewer from "./components/cvipViewer";
 
-
-
-
 function App() {
 
   const [editUnit, setEditUnit] = useState(null);
